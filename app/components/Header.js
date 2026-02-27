@@ -9,8 +9,13 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="QuickHire Logo" width={32} height={32} className="h-8 w-8" />
             <span
-              className="font-[ClashDisplay-Semibold] text-[20px] text-[#25324B] tracking-tight"
-              style={{ fontFamily: 'Clash Display, sans-serif', fontWeight: 600 }}
+              className="text-[#25324B] font-[Red_Hat_Display] text-[24px] font-bold leading-[150%]"
+              style={{
+                fontFamily: 'Red Hat Display, sans-serif',
+                fontWeight: 700,
+                fontFeatureSettings: "'cv11' on",
+                letterSpacing: '-0.24px',
+              }}
             >
               QuickHire
             </span>
