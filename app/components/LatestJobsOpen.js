@@ -83,9 +83,9 @@ const tagColors = {
 
 export default function LatestJobsOpen() {
   return (
-    <section className="w-full px-31 py-12 bg-[#F8F8FD]">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="flex items-center gap-2 font-clash-display text-5xl font-semibold">
+    <section className="w-full px-4 md:px-31 py-8 md:py-12 bg-[#F8F8FD]">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <h2 className="flex items-center gap-2 font-clash-display text-3xl sm:text-4xl md:text-5xl font-semibold">
           <span className="text-[#25324B]">Latest</span>
           <span style={{ color: '#26A4FF' }}>jobs open</span>
         </h2>
@@ -93,19 +93,19 @@ export default function LatestJobsOpen() {
           Show all jobs <span className="inline-block">→</span>
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
         {[0, 1].map((col) => (
-          <div key={col} className="flex flex-col gap-8">
+          <div key={col} className="flex flex-col gap-4 md:gap-8">
             {jobs.filter((_, i) => i % 2 === col).map((job) => (
               <div
                 key={job.id}
-                className="flex items-center bg-white rounded-[8px] px-8 py-6 gap-6 shadow-sm"
+                className="flex flex-col sm:flex-row items-start sm:items-center bg-white rounded-[8px] px-4 md:px-8 py-4 md:py-6 gap-4 md:gap-6 shadow-sm"
               >
-                <img src={job.companyLogo} alt={job.company} className="w-12 h-12 object-contain" />
+                <img src={job.companyLogo} alt={job.company} className="w-12 h-12 object-contain mb-2 sm:mb-0" />
                 <div className="flex-1">
                   <div className="text-[#25324B] text-lg font-semibold font-epilogue leading-tight mb-1">{job.title}</div>
                   <div className="text-[#7C8493] text-sm font-epilogue mb-3">{job.company} · {job.location}</div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
                     {job.tags.map((tag) => (
                       <span
                         key={tag}

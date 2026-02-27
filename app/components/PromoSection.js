@@ -2,8 +2,8 @@ import Image from 'next/image'
 
 export default function PromoSection () {
   return (
-    <div className='px-31 bg-white pb-[72px]'>
-      <section className='w-full flex items-center justify-center min-h-[414px] relative overflow-hidden'>
+    <div className='bg-white pb-12 md:pb-[72px] px-4 sm:px-8 md:px-31'>
+      <section className='w-full flex flex-col md:flex-row items-center justify-center min-h-[414px] relative overflow-hidden'>
         {/* SVG Background */}
         <svg
           className="absolute left-0 top-0 w-full h-full z-0"
@@ -14,14 +14,14 @@ export default function PromoSection () {
           <path d="M0 63.5V414H999.712L1192 319.5V0H128.706L0 63.5Z" fill="#4640DE"/>
         </svg>
         {/* Left Side: Text Content */}
-        <div className='flex flex-col justify-center pl-16 pr-8 py-16 w-1/2 z-10 relative'>
+        <div className='flex flex-col justify-center items-center md:items-start px-2 sm:px-8 md:pl-16 md:pr-8 py-10 md:py-16 w-full md:w-1/2 z-10 relative'>
           <h2
-            className="mb-4 text-white font-clash-display text-[48px] font-semibold leading-[110%]"
+            className="mb-4 text-white font-clash-display text-3xl sm:text-4xl md:text-[48px] font-semibold leading-[110%] text-center md:text-left"
           >
-            Start posting<br />jobs today
+            Start posting<br className="hidden sm:block" />jobs today
           </h2>
           <p
-            className="mb-8 text-white font-epilogue text-[16px] font-medium leading-[160%]"
+            className="mb-8 text-white font-epilogue text-base sm:text-[16px] font-medium leading-[160%] text-center md:text-left"
           >
             Start posting jobs for only $10.
           </p>
@@ -33,15 +33,15 @@ export default function PromoSection () {
           </a>
         </div>
         {/* Right Side: Dashboard Image */}
-        <div className='w-1/2 flex flex-col pr-8 relative z-10 h-full'>
-          <div className="flex flex-grow items-end justify-end h-full w-full">
+        <div className='w-full md:w-1/2 flex flex-col pr-0 md:pr-8 relative z-10 h-full mt-8 md:mt-0'>
+          <div className="flex flex-grow items-end justify-center md:justify-end h-full w-full">
             <Image
               src='/dashboard.png'
               alt='Dashboard Preview'
               width={600}
               height={350}
-              className='shadow-lg border border-white mt-11'
-              style={{maxWidth: '100%', height: 'auto'}}
+              className='shadow-lg border border-white mt-4 md:mt-11 max-w-[90vw] md:max-w-full h-auto'
+              style={{maxWidth: '100%', height: 'auto'}} 
             />
           </div>
         </div>

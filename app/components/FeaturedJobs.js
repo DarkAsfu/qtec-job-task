@@ -92,9 +92,9 @@ const tagColors = {
 
 export default function FeaturedJobs() {
   return (
-    <section className="w-full px-31 py-12">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="flex items-center gap-2 font-clash-display text-5xl font-semibold">
+    <section className="w-full px-4 md:px-31 py-8 md:py-12">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <h2 className="flex items-center gap-2 font-clash-display text-3xl sm:text-4xl md:text-5xl font-semibold">
           <span className="text-[#25324B]">Featured</span>
           <span style={{ color: '#26A4FF' }}>jobs</span>
         </h2>
@@ -102,12 +102,11 @@ export default function FeaturedJobs() {
           Show all jobs <span className="inline-block">→</span>
         </Link>
       </div>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {jobs.map((job) => (
           <div
             key={job.id}
-            className="flex flex-col items-start gap-4 flex-[1_0_0] p-6 border border-[#D6DDEB] bg-white"
-            
+            className="flex flex-col items-start gap-4 flex-[1_0_0] p-4 md:p-6 border border-[#D6DDEB] bg-white"
           >
             <div className="flex items-center justify-between w-full mb-4">
               <img src={job.companyLogo} alt={job.company} className="w-8 h-8 object-contain" />

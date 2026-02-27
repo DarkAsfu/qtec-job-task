@@ -1,10 +1,10 @@
-export default function Footer() {
+function Footer() {
   return (
-    <footer className="bg-[#232533] text-white pt-16 pb-8 px-31">
+    <footer className="bg-[#232533] text-white pt-10 md:pt-16 pb-6 md:pb-8 px-4 sm:px-8 md:px-31">
       <div className="max-w-[1440px] mx-auto">
-        <div className="flex flex-wrap justify-between gap-12 mb-12">
+        <div className="flex flex-col md:flex-row flex-wrap justify-between gap-8 md:gap-12 mb-10 md:mb-12">
           {/* Logo and description */}
-          <div className="min-w-[260px] max-w-[320px]">
+          <div className="min-w-[180px] max-w-full md:max-w-[320px] mb-8 md:mb-0">
             <div className="flex items-center gap-3 mb-6">
               <img src="/logo.png" alt="QuickHire Logo" width={32} height={32} className="h-8 w-8" />
               <span className="font-bold text-xl">QuickHire</span>
@@ -14,7 +14,7 @@ export default function Footer() {
             </p>
           </div>
           {/* About */}
-          <div>
+          <div className="mb-8 md:mb-0 min-w-[120px]">
             <h4 className="font-semibold mb-4">About</h4>
             <ul className="space-y-2 text-[#E5E7EB]">
               <li>Companies</li>
@@ -25,7 +25,7 @@ export default function Footer() {
             </ul>
           </div>
           {/* Resources */}
-          <div>
+          <div className="mb-8 md:mb-0 min-w-[120px]">
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-[#E5E7EB]">
               <li>Help Docs</li>
@@ -35,25 +35,25 @@ export default function Footer() {
             </ul>
           </div>
           {/* Get job notifications */}
-          <div className="min-w-[320px] max-w-[400px]">
+          <div className="min-w-[180px] max-w-full md:max-w-[400px]">
             <h4 className="font-semibold mb-4">Get job notifications</h4>
             <p className="text-[#E5E7EB] text-base mb-4">The latest job news, articles, sent to your inbox weekly.</p>
-            <form className="flex gap-2 mb-0">
+            <form className="flex flex-col sm:flex-row gap-2 mb-0 w-full">
               <input
                 type="email"
                 placeholder="Email Address"
-                className="flex-1 px-4 py-3 rounded-md bg-[#292B38] text-white placeholder-[#B0B3C7] border-none outline-none"
+                className="flex-1 px-4 py-3 rounded-md bg-[#292B38] text-white placeholder-[#B0B3C7] border-none outline-none min-w-0"
               />
               <button
                 type="submit"
-                className="px-6 py-3 rounded-md bg-[#5B3DF6] text-white font-semibold hover:bg-[#6C63FF] transition"
+                className="px-6 py-3 rounded-md bg-[#5B3DF6] text-white font-semibold hover:bg-[#6C63FF] transition w-full sm:w-auto"
               >
                 Subscribe
               </button>
             </form>
           </div>
         </div>
-        <div className="border-t border-[#35374A] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-[#35374A] pt-6 md:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <span className="text-[#B0B3C7] text-sm">2021 @ QuickHire. All rights reserved.</span>
           <div className="flex gap-4">
             <a href="#" className="w-9 h-9 rounded-full bg-[#292B38] flex items-center justify-center text-[#B0B3C7] hover:text-white hover:bg-[#4640DE] transition">
@@ -77,3 +77,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default Footer;

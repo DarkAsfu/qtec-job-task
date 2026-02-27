@@ -10,26 +10,25 @@ const categories = [
   { name: "Business", jobs: 211, icon: 'briefcase' },
   { name: "Human Resource", jobs: 346, icon: 'users' },
 ];
-
-export default function ExploreCategories() {
+function ExploreCategories() {
   return (
     <section className="w-full bg-white">
-      <div style={{ padding: '48px 122px 48px 124px' }}>
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="flex items-center gap-2 font-clash-display text-5xl font-semibold">
+      <div className="px-4 sm:px-8 md:px-20 lg:px-[124px] py-8 md:py-12 lg:py-[48px]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 md:mb-10 gap-4">
+          <h2 className="flex items-center gap-2 font-clash-display text-3xl sm:text-4xl md:text-5xl font-semibold">
             <span>Explore by</span>
             <span style={{ color: '#26A4FF' }}>category</span>
           </h2>
-          <a href="#" className="text-[#4640DE] text-[16px] font-semibold font-epilogue flex items-center gap-2 hover:underline">
+          <a href="#" className="text-[#4640DE] text-[15px] sm:text-[16px] font-semibold font-epilogue flex items-center gap-2 hover:underline whitespace-nowrap">
             Show all jobs <span className="inline-block">→</span>
           </a>
         </div>
 
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {categories.map((cat) => (
             <div
               key={cat.name}
-              className="relative group flex flex-col items-start gap-[32px] p-[32px] transition cursor-pointer bg-white border border-[#D6DDEB] hover:bg-[#4640DE] hover:border-[#4640DE]"
+              className="relative group flex flex-col items-start gap-6 md:gap-[32px] p-6 md:p-[32px] transition cursor-pointer bg-white border border-[#D6DDEB] hover:bg-[#4640DE] hover:border-[#4640DE] min-h-[180px]"
             >
               <div className="w-12 h-12 flex items-center justify-center mb-4">
                 {cat.icon === 'pencil' && (
@@ -110,3 +109,5 @@ export default function ExploreCategories() {
     </section>
   );
 }
+
+export default ExploreCategories;
