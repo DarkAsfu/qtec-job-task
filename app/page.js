@@ -2,6 +2,8 @@
 import Banner from './components/Banner';
 import Companies from './components/Companies';
 import ExploreCategories from './components/ExploreCategories';
+import FeaturedJobs from './components/FeaturedJobs';
+import PromoSection from './components/PromoSection';
 
 export default function Page() {
   return (
@@ -9,6 +11,8 @@ export default function Page() {
       <Banner />
       <Companies/>
       <ExploreCategories/>
+      <PromoSection/>
+      <FeaturedJobs/>
     </div>
   );
 }
