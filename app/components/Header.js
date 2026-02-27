@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="w-full bg-transparent pt-8">
-      <div className="max-w-[1200px] mx-auto flex items-center justify-between px-8">
+    <header className="w-full bg-transparent z-30 relative h-[78px] flex items-center">
+      <div className="mx-auto flex items-center justify-between px-31 w-full h-full">
         <div className="flex items-center gap-12">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="QuickHire Logo" width={32} height={32} className="h-8 w-8" />
