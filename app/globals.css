@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@600&family=Epilogue:wght@400;500;700&display=swap');
+
+:root {
+  --font-clash-display: 'Clash Display', sans-serif;
+  --font-epilogue: 'Epilogue', sans-serif;
+}
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -122,5 +129,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-epilogue);
   }
 }
