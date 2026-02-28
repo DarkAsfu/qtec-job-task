@@ -22,6 +22,8 @@ export default function LoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || data.message || "Login failed");
       localStorage.setItem("token", data.token);
+      localStorage.setItem("name", data.name);
+      localStorage.setItem("email", data.email);
       window.location.href = "/";
     } catch (err) {
       setError(err.message);
