@@ -16,7 +16,9 @@ export default function AddJobPage() {
     jobType: "Remote",
     description: "",
     isFeatured: false,
+    companyLogo: "",
   });
+  const [logoFile, setLogoFile] = useState(null);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,20 +36,39 @@ export default function AddJobPage() {
     setLoading(true);
     setError("");
     setSuccess("");
+    let logoUrl = form.companyLogo;
     try {
+      // Upload logo to imgbb if file selected
+      if (logoFile) {
+        const imgbbApiKey = "d09a72a35f9ef5e5cc973c99f86fc68d";
+        const formData = new FormData();
+        formData.append("image", logoFile);
+        const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
+          method: "POST",
+          body: formData,
+        });
+        const imgbbData = await imgbbRes.json();
+        if (!imgbbRes.ok || !imgbbData.data?.url) throw new Error("Logo upload failed");
+        logoUrl = imgbbData.data.url;
+      }
       const token = localStorage.getItem("token");
+      // Only include companyLogo if a logo was uploaded
+      const payload = { ...form };
+      if (logoUrl) payload.companyLogo = logoUrl;
+      else delete payload.companyLogo;
       const res = await fetch("http://localhost:5000/api/jobs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to add job");
       setSuccess("Job added successfully!");
-      setForm({ title: "", company: "", location: "", category: "", description: "" });
+      setForm({ title: "", company: "", location: "", category: "", jobType: "Remote", description: "", isFeatured: false, companyLogo: "" });
+      setLogoFile(null);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -58,7 +79,18 @@ export default function AddJobPage() {
   return (
     <div className="w-[90%] mx-auto mt-10 bg-white p-8 rounded shadow ">
       <h2 className="text-3xl font-bold mb-8">Create Job</h2>
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="space-y-6" onSubmit={handleSubmit} encType="multipart/form-data">
+                <div>
+                  <Label htmlFor="companyLogo">Company Logo</Label>
+                  <Input
+                    id="companyLogo"
+                    name="companyLogo"
+                    type="file"
+                    accept="image/*"
+                    className="mt-2"
+                    onChange={e => setLogoFile(e.target.files[0])}
+                  />
+                </div>
         <div>
           <Label htmlFor="title">Job Title</Label>
           <Input id="title" name="title" value={form.title} onChange={handleChange} required placeholder="e.g. Housekeeping Attendant" className="mt-2" />

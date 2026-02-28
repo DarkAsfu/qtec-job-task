@@ -1,79 +1,5 @@
+"use server";
 import Link from 'next/link';
-
-const jobs = [
-  {
-    id: 1,
-    companyLogo: '/icon/fiSX9QYy_400x400 1.png', // Nomad
-    title: 'Social Media Assistant',
-    company: 'Nomad',
-    location: 'Paris, France',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 2,
-    companyLogo: '/icon/BvBoaEET_400x400 1.png', // Netlify
-    title: 'Social Media Assistant',
-    company: 'Netlify',
-    location: 'Paris, France',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 3,
-    companyLogo: '/icon/BvBoaEET_400x400 1.png', // Dropbox
-    title: 'Brand Designer',
-    company: 'Dropbox',
-    location: 'San Fransisco, USA',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 4,
-    companyLogo: '/icon/v-6GHzAd_400x400.png', // Maze
-    title: 'Brand Designer',
-    company: 'Maze',
-    location: 'San Fransisco, USA',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 5,
-    companyLogo: '/icon/qUvcta52_400x400 1.png', // Terraform
-    title: 'Interactive Developer',
-    company: 'Terraform',
-    location: 'Hamburg, Germany',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 6,
-    companyLogo: '/icon/s93HU9p3_400x400.png', // Udacity
-    title: 'Interactive Developer',
-    company: 'Udacity',
-    location: 'Hamburg, Germany',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 7,
-    companyLogo: '/icon/Btnfm47p_400x400 1.png', // Packer
-    title: 'HR Manager',
-    company: 'Packer',
-    location: 'Lucern, Switzerland',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-  {
-    id: 8,
-    companyLogo: '/icon/godaddy-logo-0 1.png', // Webflow
-    title: 'HR Manager',
-    company: 'Webflow',
-    location: 'Lucern, Switzerland',
-    type: 'Full-Time',
-    tags: ['Full-Time', 'Marketing', 'Design'],
-  },
-];
 
 const tagColors = {
   'Full-Time': 'bg-[#E9FBF0] text-[#4DC591] border border-[#E9FBF0]',
@@ -81,7 +7,17 @@ const tagColors = {
   Design: 'bg-white text-[#4640DE] border border-[#4640DE]',
 };
 
-export default function LatestJobsOpen() {
+export default async function LatestJobsOpen() {
+  let jobs = [];
+  let error = "";
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`, { cache: 'no-store' });
+    const allJobs = await res.json();
+    jobs = allJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 8);
+  } catch (e) {
+    error = "Failed to load latest jobs.";
+  }
+
   return (
     <section className="w-full px-4 md:px-31 py-8 md:py-12 bg-[#F8F8FD]">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
@@ -93,27 +29,27 @@ export default function LatestJobsOpen() {
           Show all jobs <span className="inline-block">→</span>
         </Link>
       </div>
+      {error && <div className="text-red-500">{error}</div>}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
         {[0, 1].map((col) => (
           <div key={col} className="flex flex-col gap-4 md:gap-8">
             {jobs.filter((_, i) => i % 2 === col).map((job) => (
               <div
-                key={job.id}
+                key={job._id}
                 className="flex flex-col sm:flex-row items-start sm:items-center bg-white rounded-[8px] px-4 md:px-8 py-4 md:py-6 gap-4 md:gap-6 shadow-sm"
               >
-                <img src={job.companyLogo} alt={job.company} className="w-12 h-12 object-contain mb-2 sm:mb-0" />
+                <img src={job.companyLogo || '/icon/default.png'} alt={job.company} className="w-12 h-12 object-contain mb-2 sm:mb-0" />
                 <div className="flex-1">
                   <div className="text-[#25324B] text-lg font-semibold font-epilogue leading-tight mb-1">{job.title}</div>
                   <div className="text-[#7C8493] text-sm font-epilogue mb-3">{job.company} · {job.location}</div>
                   <div className="flex gap-2 flex-wrap">
-                    {job.tags.map((tag) => (
+                    {job.category && (
                       <span
-                        key={tag}
-                        className={`px-3 py-1 rounded-[6px] text-xs font-epilogue font-medium ${tagColors[tag] || 'bg-gray-100 text-gray-700 border'}`}
+                        className={`px-3 py-1 rounded-[6px] text-xs font-epilogue font-medium ${tagColors[job.category] || 'bg-gray-100 text-gray-700 border'}`}
                       >
-                        {tag}
+                        {job.category}
                       </span>
-                    ))}
+                    )}
                   </div>
                 </div>
               </div>
