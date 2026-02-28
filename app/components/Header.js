@@ -52,8 +52,8 @@ export default function Header() {
                 <Link href="#" className="text-[#515B6F] font-[Epilogue] text-[18px] font-medium leading-[160%] hover:text-[#4640DE]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 500 }}>Browse Companies</Link>
               </nav>
               <div className="flex flex-col gap-4 mt-8">
-                <Link href="#" className="text-[#4640DE] font-bold font-[Epilogue] text-[16px] hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
-                <Link href="#" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
+                <Link href="/login" className="text-[#4640DE] font-bold font-[Epilogue] text-[16px] hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
+                <Link href="/register" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
               </div>
             </div>
           </div>
@@ -64,9 +64,9 @@ export default function Header() {
             <Link href="#" className="transition text-[#515B6F] font-[Epilogue] text-[16px] font-medium leading-[160%] hover:text-[#4640DE]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 500 }}>Browse Companies</Link>
           </nav>
           <div className="flex items-center gap-0 ml-8">
-            <Link href="#" className="px-0 py-0 text-[#4640DE] font-bold font-[Epilogue] text-[16px] mr-8 hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
+            <Link href="/login" className="px-0 py-0 text-[#4640DE] font-bold font-[Epilogue] text-[16px] mr-8 hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
             <div className="h-8 w-px bg-[#E0E0E0] mx-2" />
-            <Link href="#" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
+            <Link href="/register" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
           </div>
         </div>
       </div>
