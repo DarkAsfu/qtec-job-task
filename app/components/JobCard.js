@@ -4,13 +4,19 @@ export default function JobCard({ job }) {
   return (
     <div className="flex flex-col gap-4 p-6 bg-white border border-[#D6DDEB] rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="flex items-center gap-3 mb-2">
-        <Image src={job.companyLogo} alt={job.company} width={48} height={48} className="w-12 h-12 object-contain" />
-            <div>
-              <Link href={`/job-details/${job.id}`} className="font-clash-display text-lg font-semibold text-[#25324B] hover:underline">
-                {job.title}
-              </Link>
-              <div className="font-epilogue text-[#7C8493] text-sm">{job.company}</div>
-            </div>
+        {job.companyLogo && job.companyLogo !== "" ? (
+          <Image src={job.companyLogo} alt={job.company} width={48} height={48} className="w-12 h-12 object-contain" />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-400">
+            {job.company?.[0] || 'J'}
+          </div>
+        )}
+        <div>
+          <Link href={`/job-details/${job.id || job._id}`} className="font-clash-display text-lg font-semibold text-[#25324B] hover:underline">
+            {job.title}
+          </Link>
+          <div className="font-epilogue text-[#7C8493] text-sm">{job.company}</div>
+        </div>
       </div>
       <div className="font-epilogue text-[#515B6F] text-base mb-2">{job.location}</div>
       <div className="flex flex-wrap gap-2 mb-2">

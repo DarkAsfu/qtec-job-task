@@ -1,12 +1,38 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function ViewJobsPage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
+  const router = useRouter();
+
+  // Delete job handler
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to delete job");
+      setJobs(jobs => jobs.filter(j => j._id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Edit job handler (navigate to edit page)
+  const handleEdit = (id) => {
+    router.push(`/dashboard/edit-job/${id}`);
+  };
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -62,10 +88,17 @@ export default function ViewJobsPage() {
             {filteredJobs.map((job, idx) => (
               <tr key={job._id} className={idx % 2 === 1 ? 'bg-gray-50' : ''}>
                 <td className="py-4 px-6 flex items-center gap-3 min-w-[220px]">
-                  {/* Placeholder for logo */}
-                  <div className="w-10 h-10 rounded bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-400">
-                    {job.company?.[0] || 'J'}
-                  </div>
+                  {job.companyLogo ? (
+                    <img
+                      src={job.companyLogo}
+                      alt={job.company}
+                      className="w-10 h-10 rounded object-cover border border-gray-200"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded bg-gray-200 flex items-center justify-center text-lg font-bold text-gray-400">
+                      {job.company?.[0] || 'J'}
+                    </div>
+                  )}
                   <div>
                     <div className="text-[#25324B] font-semibold font-epilogue leading-tight">{job.title}</div>
                     <div className="text-[#7C8493] text-xs font-epilogue">{job.description?.slice(0, 40)}...</div>
@@ -92,9 +125,20 @@ export default function ViewJobsPage() {
                 <td className="py-4 px-6 text-[#25324B] text-sm font-epilogue">{job.company}</td>
                 <td className="py-4 px-6 text-[#25324B] text-sm font-epilogue">{job.location}</td>
                 <td className="py-4 px-6 text-[#7C8493] text-xs font-epilogue">{job.created_at ? new Date(job.created_at).toLocaleDateString() : ''}</td>
-                <td className="py-4 px-6">
-                  <button className="p-2 rounded hover:bg-gray-100 transition">
-                    <svg width="20" height="20" fill="none" stroke="#222" strokeWidth="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+                <td className="py-4 px-6 flex gap-2">
+                  <button
+                    className="p-2 rounded hover:bg-blue-50 transition border border-blue-100 text-blue-600"
+                    title="Edit"
+                    onClick={() => handleEdit(job._id)}
+                  >
+                    <Pencil size={18} />
+                  </button>
+                  <button
+                    className="p-2 rounded hover:bg-red-50 transition border border-red-100 text-red-600"
+                    title="Delete"
+                    onClick={() => handleDelete(job._id)}
+                  >
+                    <Trash2 size={18} />
                   </button>
                 </td>
               </tr>

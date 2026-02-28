@@ -1,4 +1,5 @@
 
+"use client";
 import { useState } from 'react';
 import JobCard from './JobCard';
 import { Input } from '@/components/ui/input';
@@ -19,16 +20,14 @@ export default function JobListings({ jobs }) {
 
   const filteredJobs = jobs.filter(job => {
     const matchesSearch =
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.company.toLowerCase().includes(search.toLowerCase());
+      job.title?.toLowerCase().includes(search.toLowerCase()) ||
+      job.company?.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = category ? job.category === category : true;
-    const matchesLocation = location ? job.location.toLowerCase().includes(location.toLowerCase()) : true;
-    const matchesJobType = jobType
-      ? (job.type && job.type.toLowerCase().trim() === jobType.toLowerCase().trim())
-      : true;
-    const matchesWorkMode = workMode
-      ? (job.mode && job.mode.toLowerCase().trim() === workMode.toLowerCase().trim())
-      : true;
+    const matchesLocation = location ? job.location?.toLowerCase().includes(location.toLowerCase()) : true;
+    // jobType filter: match job.jobType (Remote/Onsite)
+    const matchesJobType = jobType ? (job.jobType && job.jobType === jobType) : true;
+    // workMode filter: for this backend, workMode === jobType (Remote/Onsite)
+    const matchesWorkMode = workMode ? (job.jobType && job.jobType === workMode) : true;
     return matchesSearch && matchesCategory && matchesLocation && matchesJobType && matchesWorkMode;
   });
 
@@ -65,19 +64,6 @@ export default function JobListings({ jobs }) {
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">All Job Types</SelectItem>
-                <SelectItem value="Full-Time">Full Time</SelectItem>
-                <SelectItem value="Part-Time">Part Time</SelectItem>
-                <SelectItem value="Contractual">Contractual</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select value={workMode || 'all'} onValueChange={v => setWorkMode(v === 'all' ? '' : v)}>
-            <SelectTrigger className="w-30 font-epilogue text-base text-[#25324B] bg-white">
-              <SelectValue placeholder="Remote/Onsite" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="all">Remote/Onsite</SelectItem>
                 <SelectItem value="Remote">Remote</SelectItem>
                 <SelectItem value="Onsite">Onsite</SelectItem>
               </SelectGroup>
@@ -96,7 +82,7 @@ export default function JobListings({ jobs }) {
           {filteredJobs.length === 0 ? (
             <div className="col-span-full text-[#7C8493] text-center py-12 font-epilogue">No jobs found.</div>
           ) : (
-            filteredJobs.map(job => <JobCard key={job.id} job={job} />)
+            filteredJobs.map(job => <JobCard key={job._id || job.id} job={job} />)
           )}
         </div>
       </div>

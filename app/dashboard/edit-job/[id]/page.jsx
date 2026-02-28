@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function AddJobPage() {
+export default function EditJobPage() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params?.id;
   const [form, setForm] = useState({
     title: "",
     company: "",
@@ -20,9 +24,30 @@ export default function AddJobPage() {
     companyLogo: "",
   });
   const [logoFile, setLogoFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const fetchJob = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`http://localhost:5000/api/jobs/${id}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to fetch job");
+        setForm({
+          ...data,
+          responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities.join("\n") : "",
+        });
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJob();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -53,7 +78,6 @@ export default function AddJobPage() {
         logoUrl = imgbbData.data.url;
       }
       const token = localStorage.getItem("token");
-      // Only include companyLogo if a logo was uploaded
       const payload = { ...form };
       if (logoUrl) payload.companyLogo = logoUrl;
       else delete payload.companyLogo;
@@ -64,8 +88,8 @@ export default function AddJobPage() {
           .map(r => r.trim())
           .filter(r => r.length > 0);
       }
-      const res = await fetch("http://localhost:5000/api/jobs", {
-        method: "POST",
+      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -73,10 +97,9 @@ export default function AddJobPage() {
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to add job");
-      setSuccess("Job added successfully!");
-      setForm({ title: "", company: "", location: "", category: "", jobType: "Remote", description: "", responsibilities: "", isFeatured: false, companyLogo: "" });
-      setLogoFile(null);
+      if (!res.ok) throw new Error(data.error || "Failed to update job");
+      setSuccess("Job updated successfully!");
+      setTimeout(() => router.push("/dashboard/view-jobs"), 1200);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -90,7 +113,7 @@ export default function AddJobPage() {
 
   return (
     <div className="w-[90%] mx-auto mt-10 bg-white p-8 rounded shadow ">
-      <h2 className="text-3xl font-bold mb-8">Create Job</h2>
+      <h2 className="text-3xl font-bold mb-8">Edit Job</h2>
       <form className="space-y-6" onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <Label htmlFor="companyLogo">Company Logo</Label>
@@ -102,6 +125,9 @@ export default function AddJobPage() {
             className="mt-2"
             onChange={e => setLogoFile(e.target.files[0])}
           />
+          {form.companyLogo && (
+            <img src={form.companyLogo} alt="Current Logo" className="mt-2 w-16 h-16 rounded object-cover border" />
+          )}
         </div>
         <div>
           <Label htmlFor="title">Job Title</Label>
@@ -162,7 +188,7 @@ export default function AddJobPage() {
         {error && <div className="text-red-600 text-sm">{error}</div>}
         {success && <div className="text-green-600 text-sm">{success}</div>}
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Adding..." : "Add Job"}
+          {loading ? "Updating..." : "Update Job"}
         </Button>
       </form>
     </div>
