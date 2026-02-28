@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export default function JobDetailsPage(props) {
   const {id} = useParams()
@@ -85,7 +86,13 @@ export default function JobDetailsPage(props) {
               <div className="flex justify-between text-[#25324B] font-epilogue text-base"><span className="font-semibold">Category</span> <span className="font-normal">{job.category || '-'}</span></div>
               <div className="flex justify-between text-[#25324B] font-epilogue text-base"><span className="font-semibold">Posted</span> <span className="font-normal">{job.created_at ? new Date(job.created_at).toLocaleDateString() : '-'}</span></div>
             </div>
-            <button className="w-full py-2.5 rounded-lg bg-linear-to-r from-[#3ec6e0] to-[#4f8cff] text-white font-epilogue text-lg font-semibold shadow hover:from-[#4f8cff] hover:to-[#3ec6e0] transition mb-4">Apply Now</button>
+            <Link
+              href={`/apply-job/${id}`}
+              className="w-full block py-3 rounded-xl bg-gradient-to-r from-[#3ec6e0] to-[#4f8cff] text-white font-clash-display text-lg font-bold shadow-lg hover:from-[#4f8cff] hover:to-[#3ec6e0] transition-all duration-200 mb-4 text-center flex items-center justify-center gap-2 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3ec6e0]"
+            >
+              <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              <span>Apply Now</span>
+            </Link>
             
           </div>
         </aside>
