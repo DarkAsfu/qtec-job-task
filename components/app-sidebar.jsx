@@ -73,7 +73,13 @@ export function AppSidebar({ user, ...props }) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain
+          items={data.navMain.map(item => ({
+            ...item,
+            href: item.url,
+          }))}
+          activeTitle={typeof window !== 'undefined' ? data.navMain.find(i => i.url === window.location.pathname)?.title : undefined}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
