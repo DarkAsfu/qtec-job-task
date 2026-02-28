@@ -1,6 +1,6 @@
 "use server";
 
-import JobListings from "../components/JobListings";
+import JobListings from "../../components/JobListings";
 
 export default async function JobListingsPage() {
   let jobs = [];
