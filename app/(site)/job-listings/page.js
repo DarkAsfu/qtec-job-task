@@ -17,7 +17,7 @@ export default function JobListingsPage() {
     async function fetchJobs() {
       setLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`, { cache: 'no-store' });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://qtec-job-task-server.vercel.app'}/api/jobs`, { cache: 'no-store' });
         const data = await res.json();
         setJobs(data);
       } catch (e) {

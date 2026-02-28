@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getJobs() {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`);
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'https://qtec-job-task-server.vercel.app'}/api/jobs`);
   return res.data;
 }
 

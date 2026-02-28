@@ -14,7 +14,7 @@ export default function JobDetailsPage(props) {
     if (!id) return;
     const fetchJob = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/jobs/${id}`);
+        const res = await fetch(`https://qtec-job-task-server.vercel.app/api/jobs/${id}`);
         if (!res.ok) throw new Error("Failed to fetch job details");
         const data = await res.json();
         setJob({

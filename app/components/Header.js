@@ -9,6 +9,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const profileMenuRef = useRef(null);
 
   useEffect(() => {
@@ -20,8 +21,15 @@ export default function Header() {
         setProfileMenuOpen(false);
       }
     }
+    function handleScroll() {
+      setScrolled(window.scrollY > 10);
+    }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -30,7 +38,7 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full bg-transparent z-30 relative h-[78px] flex items-center">
+    <header className={`w-full z-30 sticky top-0 h-[78px] flex items-center transition-colors duration-300 ${scrolled ? 'bg-white backdrop-blur shadow' : 'bg-transparent'}`}> 
       <div className="mx-auto flex items-center justify-between px-4 md:px-31 w-full h-full">
         <div className="flex items-center gap-8 md:gap-12">
           <Link href="/" className="flex items-center gap-2 md:gap-3">

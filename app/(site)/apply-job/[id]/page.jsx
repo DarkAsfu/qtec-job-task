@@ -34,7 +34,7 @@ export default function ApplyJobPage() {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("http://localhost:5000/api/applications", {
+      const res = await fetch("https://qtec-job-task-server.vercel.app/api/applications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -67,7 +67,7 @@ export default function AddJobPage() {
           .map(r => r.trim())
           .filter(r => r.length > 0);
       }
-      const res = await fetch("http://localhost:5000/api/jobs", {
+      const res = await fetch("https://qtec-job-task-server.vercel.app/api/jobs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

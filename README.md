@@ -12,7 +12,7 @@ This is the Next.js frontend for the Qtec Job Board project. It provides a moder
    ```
 2. Create a `.env.local` file in the `frontend` directory with the following content:
    ```
-   NEXT_PUBLIC_API_URL=http://localhost:5000
+   NEXT_PUBLIC_API_URL=https://qtec-job-task-server.vercel.app
    NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
    ```
    - Replace `your_imgbb_api_key` with your actual imgbb API key for logo uploads.
@@ -27,7 +27,7 @@ This is the Next.js frontend for the Qtec Job Board project. It provides a moder
 
 ### Environment Variables
 
-- `NEXT_PUBLIC_API_URL` — The base URL for the backend API (default: http://localhost:5000)
+- `NEXT_PUBLIC_API_URL` — The base URL for the backend API (default: https://qtec-job-task-server.vercel.app)
 - `NEXT_PUBLIC_IMGBB_API_KEY` — Your imgbb API key for uploading company logos
 
 ---

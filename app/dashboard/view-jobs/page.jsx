@@ -16,7 +16,7 @@ export default function ViewJobsPage() {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
+      const res = await fetch(`https://qtec-job-task-server.vercel.app/api/jobs/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ export default function ViewJobsPage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("http://localhost:5000/api/jobs");
+        const res = await fetch("https://qtec-job-task-server.vercel.app/api/jobs");
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch jobs");
         setJobs(data);

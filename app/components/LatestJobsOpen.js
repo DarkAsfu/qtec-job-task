@@ -11,7 +11,7 @@ export default async function LatestJobsOpen() {
   let jobs = [];
   let error = "";
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://qtec-job-task-server.vercel.app'}/api/jobs`, { cache: 'no-store' });
     const allJobs = await res.json();
     jobs = allJobs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 8);
   } catch (e) {

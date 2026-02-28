@@ -36,7 +36,7 @@ export default function ViewApplicationsPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:5000/api/applications", {
+      const res = await fetch("https://qtec-job-task-server.vercel.app/api/applications", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

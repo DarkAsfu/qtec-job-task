@@ -24,13 +24,13 @@ export default function Page() {
       setError("");
       try {
         // Fetch jobs count
-        const jobsRes = await fetch("http://localhost:5000/api/jobs");
+        const jobsRes = await fetch("https://qtec-job-task-server.vercel.app/api/jobs");
         const jobsData = await jobsRes.json();
         // Fetch applications
         const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
         let applications = [];
         try {
-          const appRes = await fetch("http://localhost:5000/api/applications", {
+          const appRes = await fetch("https://qtec-job-task-server.vercel.app/api/applications", {
             headers: { Authorization: `Bearer ${token}` },
           });
           if (appRes.ok) {

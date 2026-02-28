@@ -33,7 +33,7 @@ export default function EditJobPage() {
     const fetchJob = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:5000/api/jobs/${id}`);
+        const res = await fetch(`https://qtec-job-task-server.vercel.app/api/jobs/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch job");
         setForm({
@@ -88,7 +88,7 @@ export default function EditJobPage() {
           .map(r => r.trim())
           .filter(r => r.length > 0);
       }
-      const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
+      const res = await fetch(`https://qtec-job-task-server.vercel.app/api/jobs/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
