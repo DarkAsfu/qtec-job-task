@@ -5,13 +5,23 @@ export default function PromoSection () {
     <div className='bg-white pb-12 md:pb-[72px] px-4 sm:px-8 md:px-31'>
       <section className='w-full flex flex-col md:flex-row items-center justify-center min-h-[414px] relative overflow-hidden'>
         {/* SVG Background */}
+        {/* Desktop/Tablet SVG */}
         <svg
-          className="absolute left-0 top-0 w-full h-full z-0"
+          className="hidden md:block absolute left-0 top-0 w-full h-full z-0"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1192 380"
           fill="none"
         >
           <path d="M0 63.5V414H999.712L1192 319.5V0H128.706L0 63.5Z" fill="#4640DE"/>
+        </svg>
+        {/* Mobile SVG */}
+        <svg
+          className="block md:hidden absolute left-0 top-0 w-full h-full z-0"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 375 640"
+          fill="none"
+        >
+          <path d="M0 63.5V640H198.712L375 545.5V0H128.706L0 63.5Z" fill="#4640DE"/>
         </svg>
         {/* Left Side: Text Content */}
         <div className='flex flex-col justify-center items-center md:items-start px-2 sm:px-8 md:pl-16 md:pr-8 py-10 md:py-16 w-full md:w-1/2 z-10 relative'>
