@@ -12,7 +12,8 @@ const categories = [
 
 
 
-export default function JobListings({ jobs, initialSearch = '', initialLocation = '', loading = false }) {
+
+export default function JobListings({ jobs, initialSearch = '', initialLocation = '', loading = false, onSearchChange, onLocationChange }) {
   const [search, setSearch] = useState(initialSearch);
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState(initialLocation);
@@ -42,7 +43,10 @@ export default function JobListings({ jobs, initialSearch = '', initialLocation 
             type="text"
             placeholder="Search jobs or companies..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              setSearch(e.target.value);
+              if (onSearchChange) onSearchChange(e.target.value);
+            }}
             className="flex-[2] min-w-[260px] md:min-w-[340px] font-epilogue text-base text-[#25324B] placeholder-[#7C8493]"
           />
           <Select value={category || 'all'} onValueChange={v => setCategory(v === 'all' ? '' : v)}>
@@ -74,7 +78,10 @@ export default function JobListings({ jobs, initialSearch = '', initialLocation 
             type="text"
             placeholder="Location"
             value={location}
-            onChange={e => setLocation(e.target.value)}
+            onChange={e => {
+              setLocation(e.target.value);
+              if (onLocationChange) onLocationChange(e.target.value);
+            }}
             className="font-epilogue text-base text-[#25324B] placeholder-[#7C8493]"
           />
         </div>
