@@ -1,8 +1,13 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function JobCard({ job }) {
   return (
-    <div className="flex flex-col gap-4 p-6 bg-white border border-[#D6DDEB] rounded-lg shadow-sm hover:shadow-md transition cursor-pointer">
+    <Link
+      href={`/job-details/${job.id || job._id}`}
+      className="flex flex-col gap-4 p-6 bg-white border border-[#D6DDEB] rounded-lg shadow-sm hover:shadow-md transition cursor-pointer no-underline"
+      prefetch={false}
+    >
       <div className="flex items-center gap-3 mb-2">
         {job.companyLogo && job.companyLogo !== "" ? (
           <Image src={job.companyLogo} alt={job.company} width={48} height={48} className="w-12 h-12 object-contain" />
@@ -12,9 +17,7 @@ export default function JobCard({ job }) {
           </div>
         )}
         <div>
-          <Link href={`/job-details/${job.id || job._id}`} className="font-clash-display text-lg font-semibold text-[#25324B] hover:underline">
-            {job.title}
-          </Link>
+          <div className="font-clash-display text-lg font-semibold text-[#25324B]">{job.title}</div>
           <div className="font-epilogue text-[#7C8493] text-sm">{job.company}</div>
         </div>
       </div>
@@ -25,7 +28,6 @@ export default function JobCard({ job }) {
         ))}
       </div>
       <div className="font-epilogue text-[#7C8493] text-sm line-clamp-2">{job.description}</div>
-    </div>
+    </Link>
   );
 }
-import Link from 'next/link';

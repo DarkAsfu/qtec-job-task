@@ -34,9 +34,11 @@ export default async function LatestJobsOpen() {
         {[0, 1].map((col) => (
           <div key={col} className="flex flex-col gap-4 md:gap-8">
             {jobs.filter((_, i) => i % 2 === col).map((job) => (
-              <div
+              <Link
                 key={job._id}
-                className="flex flex-col sm:flex-row items-start sm:items-center bg-white rounded-[8px] px-4 md:px-8 py-4 md:py-6 gap-4 md:gap-6 shadow-sm"
+                href={`/job-details/${job._id}`}
+                className="flex flex-col sm:flex-row items-start sm:items-center bg-white rounded-[8px] px-4 md:px-8 py-4 md:py-6 gap-4 md:gap-6 shadow-sm hover:shadow-md transition-shadow duration-150 cursor-pointer"
+                prefetch={false}
               >
                 <img src={job.companyLogo || '/icon/default.png'} alt={job.company} className="w-12 h-12 object-contain mb-2 sm:mb-0" />
                 <div className="flex-1">
@@ -52,7 +54,7 @@ export default async function LatestJobsOpen() {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         ))}

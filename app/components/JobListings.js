@@ -11,10 +11,11 @@ const categories = [
 ];
 
 
-export default function JobListings({ jobs }) {
-  const [search, setSearch] = useState('');
+
+export default function JobListings({ jobs, initialSearch = '', initialLocation = '', loading = false }) {
+  const [search, setSearch] = useState(initialSearch);
   const [category, setCategory] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState(initialLocation);
   const [jobType, setJobType] = useState('');
   const [workMode, setWorkMode] = useState('');
 
@@ -42,7 +43,7 @@ export default function JobListings({ jobs }) {
             placeholder="Search jobs or companies..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 font-epilogue text-base text-[#25324B] placeholder-[#7C8493]"
+            className="flex-[2] min-w-[260px] md:min-w-[340px] font-epilogue text-base text-[#25324B] placeholder-[#7C8493]"
           />
           <Select value={category || 'all'} onValueChange={v => setCategory(v === 'all' ? '' : v)}>
             <SelectTrigger className="w-40 font-epilogue text-base text-[#25324B] bg-white">
@@ -78,13 +79,17 @@ export default function JobListings({ jobs }) {
           />
         </div>
         {/* Job List */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredJobs.length === 0 ? (
-            <div className="col-span-full text-[#7C8493] text-center py-12 font-epilogue">No jobs found.</div>
-          ) : (
-            filteredJobs.map(job => <JobCard key={job._id || job.id} job={job} />)
-          )}
-        </div>
+        {loading ? (
+          <div className="text-[#7C8493] text-center py-12 font-epilogue">Loading jobs...</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredJobs.length === 0 ? (
+              <div className="col-span-full text-[#7C8493] text-center py-12 font-epilogue">No jobs found.</div>
+            ) : (
+              filteredJobs.map(job => <JobCard key={job._id || job.id} job={job} />)
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -41,13 +41,16 @@ export default function AddJobPage() {
     try {
       // Upload logo to imgbb if file selected
       if (logoFile) {
-        const imgbbApiKey = "d09a72a35f9ef5e5cc973c99f86fc68d";
+        const imgbbApiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        if (!imgbbApiKey) throw new Error("IMGBB API key not set in environment");
         const formData = new FormData();
         formData.append("image", logoFile);
-        const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
-          method: "POST",
-          body: formData,
-        });
+        const imgbbRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
         const imgbbData = await imgbbRes.json();
         if (!imgbbRes.ok || !imgbbData.data?.url) throw new Error("Logo upload failed");
         logoUrl = imgbbData.data.url;

@@ -1,14 +1,33 @@
-"use server";
+"use client";
 
-import JobListings from "../../components/JobListings";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import JobListings from "@/app/components/JobListings";
 
-export default async function JobListingsPage() {
-  let jobs = [];
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`, { cache: 'no-store' });
-    jobs = await res.json();
-  } catch (e) {
-    // jobs stays empty
-  }
-  return <JobListings jobs={jobs} />;
+export default function JobListingsPage() {
+  const searchParams = useSearchParams();
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Read query params
+  const initialSearch = searchParams.get("search") || "";
+  const initialLocation = searchParams.get("location") || "";
+
+  useEffect(() => {
+    async function fetchJobs() {
+      setLoading(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/jobs`, { cache: 'no-store' });
+        const data = await res.json();
+        setJobs(data);
+      } catch (e) {
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchJobs();
+  }, []);
+
+  return <JobListings jobs={jobs} initialSearch={initialSearch} initialLocation={initialLocation} loading={loading} />;
 }

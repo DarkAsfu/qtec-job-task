@@ -39,6 +39,11 @@ import Link from "next/link";
 const data = {
   navMain: [
     {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: IconDashboard,
+    },
+    {
       title: "Add Job Listing",
       url: "/dashboard/add-job",
       icon: IconCirclePlusFilled,
