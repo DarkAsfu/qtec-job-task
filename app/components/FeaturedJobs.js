@@ -33,16 +33,18 @@ export default async function FeaturedJobs() {
       {error && <div className="text-red-500">{error}</div>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {jobs.map((job) => (
-          <div
+          <Link
             key={job._id}
-            className="flex flex-col items-start gap-4 flex-[1_0_0] p-4 md:p-6 border border-[#D6DDEB] bg-white"
+            href={`/job-details/${job._id}`}
+            className="flex flex-col items-start gap-4 flex-[1_0_0] p-4 md:p-6 border border-[#D6DDEB] bg-white hover:shadow-lg transition cursor-pointer group"
+            prefetch={false}
           >
             <div className="flex items-center justify-between w-full mb-4">
               <img src={job.companyLogo || '/icon/default.png'} alt={job.company} className="w-8 h-8 object-contain" />
               <span className="px-3 py-1 border border-[#EDEDED] rounded-[6px] text-[#4640DE] text-xs font-epilogue font-medium bg-white">{job.jobType || job.type}</span>
             </div>
             <div className="mb-2">
-              <div className="text-[#25324B] text-base font-semibold font-epilogue leading-tight">{job.title}</div>
+              <div className="text-[#25324B] text-base font-semibold font-epilogue leading-tight group-hover:underline">{job.title}</div>
               <div className="text-[#7C8493] text-xs font-epilogue my-1">{job.company} · {job.location}</div>
             </div>
             <div className="text-[#7C8493] text-xs font-epilogue mb-4 line-clamp-2">{job.description}</div>
@@ -55,7 +57,7 @@ export default async function FeaturedJobs() {
                 </span>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

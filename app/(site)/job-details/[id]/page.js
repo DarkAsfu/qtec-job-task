@@ -135,12 +135,15 @@ export default function JobDetailsPage(props) {
               <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M16 2H8a2 2 0 00-2 2v16a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 18H8V4h8z" /></svg>
               <h3 className="font-clash-display text-xl font-semibold text-[#25324B]">Job Responsibilities</h3>
             </div>
-            {/* Responsibilities (optional) */}
-            {/* <ul className="list-disc pl-6 text-[#515B6F] font-epilogue text-base leading-relaxed space-y-1">
-              {job.responsibilities?.map((item, idx) => (
-                <li key={idx} className={item.startsWith('Required Skills') || item.startsWith('We are seeking') ? 'font-semibold mt-2' : ''}>{item}</li>
-              ))}
-            </ul> */}
+            {Array.isArray(job.responsibilities) && job.responsibilities.length > 0 ? (
+              <ul className="list-disc pl-6 text-[#515B6F] font-epilogue text-base leading-relaxed space-y-1">
+                {job.responsibilities.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[#515B6F] font-epilogue text-base leading-relaxed">-</p>
+            )}
           </div>
         </main>
       </div>

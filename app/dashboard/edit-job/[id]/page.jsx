@@ -89,7 +89,7 @@ export default function EditJobPage() {
           .filter(r => r.length > 0);
       }
       const res = await fetch(`http://localhost:5000/api/jobs/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
