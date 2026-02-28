@@ -1,11 +1,34 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { X } from 'lucide-react';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setLoggedIn(!!localStorage.getItem('token'));
+    }
+    function handleClickOutside(event) {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setProfileMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
+
   return (
     <header className="w-full bg-transparent z-30 relative h-[78px] flex items-center">
       <div className="mx-auto flex items-center justify-between px-4 md:px-31 w-full h-full">
@@ -64,9 +87,32 @@ export default function Header() {
             <Link href="#" className="transition text-[#515B6F] font-[Epilogue] text-[16px] font-medium leading-[160%] hover:text-[#4640DE]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 500 }}>Browse Companies</Link>
           </nav>
           <div className="flex items-center gap-0 ml-8">
-            <Link href="/login" className="px-0 py-0 text-[#4640DE] font-bold font-[Epilogue] text-[16px] mr-8 hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
-            <div className="h-8 w-px bg-[#E0E0E0] mx-2" />
-            <Link href="/register" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
+            {loggedIn ? (
+              <div className="relative" ref={profileMenuRef}>
+                <button
+                  className="flex items-center gap-2 focus:outline-none"
+                  onClick={() => setProfileMenuOpen((v) => !v)}
+                  aria-label="Open profile menu"
+                >
+                  <Avatar size="lg">
+                    <AvatarImage src="/icon/profile.png" alt="Profile" />
+                    <AvatarFallback>P</AvatarFallback>
+                  </Avatar>
+                </button>
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg border z-50">
+                    <Link href="/dashboard" className="block px-4 py-2 text-[#25324B] hover:bg-gray-100">Dashboard</Link>
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-[#E53E3E] hover:bg-gray-100">Logout</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link href="/login" className="px-0 py-0 text-[#4640DE] font-bold font-[Epilogue] text-[16px] mr-8 hover:underline" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Login</Link>
+                <div className="h-8 w-px bg-[#E0E0E0] mx-2" />
+                <Link href="/register" className="px-7 py-3 bg-[#5B3DF6] text-white font-bold font-[Epilogue] text-[18px] rounded-[4px] shadow hover:bg-[#3d28b0] transition border border-[#5B3DF6]" style={{ fontFamily: 'Epilogue, sans-serif', fontWeight: 700 }}>Sign Up</Link>
+              </>
+            )}
           </div>
         </div>
       </div>
